@@ -4,8 +4,9 @@ import { Flex, Button } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { selectSelectedId } from "../../redux/ugvSlice";
 import { modeClick, selectisManuel } from "../../redux/modeSlice";
+import { toggleCamera, selectCameraStatus } from "../../redux/cameraSlice"; // Ensure selectCameraStatus is imported
 
-function RightCol() {
+function RightCol({ rightCameraStatus, setRightCameraStatus, onCameraClick }) {
   const [carLat, setCarLat] = useState(null);
   const [carLong, setCarLong] = useState(null);
   const [carSpeed, setCarSpeed] = useState(null);
@@ -14,6 +15,7 @@ function RightCol() {
   const selectedId = useSelector(selectSelectedId);
   const isManuel = useSelector((state) => selectisManuel(state, selectedId)); // Seçili robotun manuel mod durumu
   const dispatch = useDispatch();
+  const cameraStatus = useSelector(selectCameraStatus);
 
   const fetchData = async () => {
     try {
@@ -64,7 +66,6 @@ function RightCol() {
         console.error("Request error:", error);
       });
 
-    // Redux state'inde manuel mod durumunu güncelle
     dispatch(modeClick({ robotId: selectedId }));
   };
 
@@ -80,6 +81,13 @@ function RightCol() {
     }
   }, [selectedId]);
 
+  const handleRightCameraClick = () => {
+    const newRightCameraStatus = !rightCameraStatus;
+    setRightCameraStatus(newRightCameraStatus);
+    dispatch(toggleCamera('right'));
+    onCameraClick(newRightCameraStatus);
+  };
+
   return (
     <Flex
       vertical={true}
@@ -87,7 +95,30 @@ function RightCol() {
       align="center"
       style={{ height: "80vh", width: "50vh", position: "relative" }}
     >
-      <Stats title="Hız" value={carSpeed} suffix="km/h" />
+      <Button
+        onClick={handleRightCameraClick}
+        type="button"
+        className="bg-sabGreenDark dark:bg-sabYellow dark:text-sabDarkBlack text-white py-2 px-4 rounded-lg shadow-lg hover:bg-sabGreenLight dark:hover:bg-sabHardYellow w-full flex items-center justify-center w-1/2 px-5 py-2 text-sm transition-colors duration-200 border rounded-lg gap-x-2 sm:w-auto"
+        style={{
+          marginBottom: "20px",
+          position: "absolute",
+          top: "10px",
+          borderColor: "#004d40", // Consistent border color
+        }}
+      >
+        <span
+          style={{
+            width: "12px",
+            height: "12px",
+            borderRadius: "50%",
+            backgroundColor: cameraStatus.right ? "#00A36C" : "#B22222",
+            display: "inline-block",
+            marginRight: "8px",
+          }}
+        ></span>
+        Sağ Kamera
+      </Button>
+      <Stats title="Hız" value={carSpeed} suffix="m/s" />
       <Stats title="Enlem" value={carLat} suffix="" />
       <Stats title="Boylam" value={carLong} suffix="" />
       <Button
@@ -97,8 +128,6 @@ function RightCol() {
           bottom: "3px",
           left: "50%",
           transform: "translateX(-50%)",
-          backgroundColor: isManuel ? "#a5d6a7" : "#f7c04a",
-          borderColor: isManuel ? "#004d40" : "#f7c04a",
           width: "130px",
           height: "30px",
           fontSize: "10px",

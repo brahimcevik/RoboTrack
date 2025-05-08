@@ -5,10 +5,12 @@ import CardLeftCol from "./CardLeftCol";
 
 function ModeCard({ selectedCarNo }) {
   const [currentPage, setCurrentPage] = useState(null);
+  const [coordinates, setCoordinates] = useState([]);
 
   const handleCardClick = (page) => {
     setCurrentPage(page);
   };
+
 
   return (
     <div className="flex justify-center items-start mt-5 space-x-4 ">
@@ -49,7 +51,7 @@ function ModeCard({ selectedCarNo }) {
           </h2>
         }
       >
-        {currentPage === "CardRightCol" && <CardRightCol  selectedCarNo={selectedCarNo} />}
+        {currentPage === "CardRightCol" && <CardRightCol setCoordinates={setCoordinates} selectedCarNo={selectedCarNo} />}
         {currentPage === "CardLeftCol" && (
           <CardLeftCol selectedCarNo={selectedCarNo} />
         )}

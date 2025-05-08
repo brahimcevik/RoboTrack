@@ -248,21 +248,22 @@ const ChatbotIcon = () => {
   
       <div
         className="fixed bottom-4 right-4 cursor-pointer flex flex-col items-center"
-        onClick={toggleChat}
+        style={{ zIndex: 9999 }}
+        onMouseEnter={() => setShowMessage(true)}
+        onMouseLeave={() => setShowMessage(false)}
       >
-        <img
-          src={robotIcon}
-          alt="Robot Icon"
-          className="w-12 h-12 hover:scale-110 transition-transform"
-        />
-        {showMessage && (
-          <div className="absolute bottom-full mb-2 bg-white p-2 rounded-lg shadow-lg">
-            Chatbot'a tıklayın
+        {showMessage && !chatOpen && (
+          <div className="mb-2 p-2 rounded-lg bg-gray-800 text-white text-sm shadow-lg transition-opacity duration-300">
+            Hey! Yardıma mı ihtiyacınız var?
           </div>
         )}
+  
+        <div className="relative" onClick={toggleChat}>
+          <img src={robotIcon} alt="Chatbot Icon" className="w-12 h-12" />
+        </div>
       </div>
     </div>
   );
 };
 
-export default ChatbotIcon; 
+export default ChatbotIcon;

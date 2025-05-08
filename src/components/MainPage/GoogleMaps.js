@@ -14,6 +14,8 @@ const center = {
   lng: 39.37325320122449,
 };
 
+  
+
 const googleMapsApiKey = "AIzaSyDyMgwuK7JtmJiPjZx039AfYW7H5pyjS78";
 
 const GoogleMaps = ({ selectedCarNo, setSelectedCarNo }) => {

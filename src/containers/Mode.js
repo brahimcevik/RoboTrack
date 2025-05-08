@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Col, Row, Flex } from "antd";
 import Weather from "../components/MainPage/Weather";
-import CarList from "../components/ModePage/ModeCarList";
+import ModeCarList from "../components/ModePage/ModeCarList";
 import GoogleMaps from "../components/MainPage/GoogleMaps";
 import ModeCard from "../components/ModePage/ModeCard";
 
-function Mode() {
-  // selectedCarNo ve setSelectedCarNo state'lerini tanımlıyoruz
-  const [selectedCarNo, setSelectedCarNo] = useState(null);
 
+function Mode() {
+  const [selectedCarNo, setSelectedCarNo] = useState(null);
+  const [localCoordinates, setLocalCoordinates] = useState([]); // Eklenen koordinatlar için state
+  const [selectedCoordinates, setSelectedCoordinates] = useState({  latitude:70.787345, longitude:126.187801}); // Default coordinates
+  const [robots, setRobots] = useState([]);
   return (
     <Row>
       <Col span={12}>
@@ -20,10 +22,10 @@ function Mode() {
               height: "100%",
             }}
           >
-            {/* CarList bileşenine selectedCarNo ve setSelectedCarNo prop'larını geçiriyoruz */}
-            <CarList
+            <ModeCarList
               selectedCarNo={selectedCarNo}
               setSelectedCarNo={setSelectedCarNo}
+              setCoordinates={setLocalCoordinates} // Eklenen koordinatları aktar
             />
           </Flex>
         </Row>
@@ -35,10 +37,9 @@ function Mode() {
               width: "100%",
             }}
           >
-            {/* ModeCard bileşenine selectedCarNo ve setSelectedCarNo prop'larını geçiriyoruz */}
             <ModeCard
               selectedCarNo={selectedCarNo}
-              setSelectedCarNo={setSelectedCarNo}
+              setCoordinates={setLocalCoordinates} // Eklenen koordinatları aktar
             />
           </Flex>
         </Row>
@@ -53,7 +54,7 @@ function Mode() {
               width: "100%",
             }}
           >
-            <Weather />
+            <Weather coordinates={selectedCoordinates} selectedCarNo={selectedCarNo} robots={robots} />
           </Flex>
         </Row>
         <Row style={{ height: "70%" }}>
@@ -64,7 +65,10 @@ function Mode() {
               width: "100%",
             }}
           >
-            <GoogleMaps />
+            <GoogleMaps 
+              selectedCarNo={selectedCarNo}
+              setSelectedCarNo={setSelectedCarNo}
+              />
           </Flex>
         </Row>
       </Col>

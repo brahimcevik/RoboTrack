@@ -18,6 +18,7 @@ import Mode from "./containers/Mode";
 import Graphic from "./containers/GrapichPage";
 import ChatbotIcon from "./components/ChatbotIcon";
 
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
