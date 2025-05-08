@@ -1,5 +1,5 @@
 import React from "react";
-import logoYazili from "../img/LogoBeyaz.png";
+import logoYazili from "../img/logoYazili.png";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import WeatherNavBar from "./MainPage/WeatherNavBar";
 
@@ -9,12 +9,11 @@ const NavBar = () => {
   };
   return (
     <div className="py-6 flex justify-between  text-sabGreenHardDark dark:text-white">
-      <div className="font-bold pl-10 text-3xl flex items-center gap-16 h-16">
-  <img src={logoYazili} className="h-24 w-auto" />
-
+      <div className="font-bold pl-10 text-3xl flex items-center gap-16">
+        <img src={logoYazili} className="h-16" />
 
         <button onClick={goBack} className="font-bold">
-          ROBO
+          Gösterge
         </button>
 
         <div className="h-100 text-sm font-thin bg-sabGreenDark dark:bg-sabDarkBlack min-w-full rounded-full p-4 flex">

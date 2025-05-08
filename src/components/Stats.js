@@ -8,7 +8,6 @@ function Stats({ title, value, suffix }) {
       <Statistic
         title={title}
         value={value}
-        precision={2}
         valueStyle={{
           color: "#white",
         }}
